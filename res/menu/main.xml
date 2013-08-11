@@ -1,0 +1,42 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+    
+    <item android:id="@+id/score" 
+        android:actionViewClass="android.widget.Spinner" 
+        android:showAsAction="always|withText" 
+        android:orderInCategory="11" android:checkable="true">
+    </item>
+    <item android:id="@+id/timer" 
+        android:title="5:00" 
+        android:showAsAction="always|withText"
+        android:orderInCategory="13" android:checkable="false">
+    </item>
+        
+    <item android:id="@+id/start_stop"
+        android:icon="@drawable/action_start"
+        android:showAsAction="always" 
+        android:title="@string/action_start"
+        android:orderInCategory="21">
+    </item>
+    <item android:id="@+id/pause" 
+        android:icon="@drawable/action_pause"
+        android:showAsAction="always" 
+        android:title="@string/action_pause"
+        android:orderInCategory="23">
+    </item>
+    <item android:id="@+id/save" android:icon="@drawable/action_save" android:showAsAction="ifRoom" android:title="@string/action_save" android:orderInCategory="25">
+    </item><item android:id="@+id/reset" 
+        android:icon="@drawable/action_reset"
+        android:showAsAction="ifRoom" 
+        android:title="@string/action_reset"
+        android:orderInCategory="27">
+    </item>
+    
+    
+
+</menu>
