@@ -3,6 +3,7 @@ package com.hoo.marscolony;
 import java.util.Locale;
 
 import com.hoo.marscolony.R.color;
+import com.hoo.marscolony.manage.GameGrid;
 import com.hoo.marscolony.manage.Match;
 import com.hoo.marscolony.manage.MatchManager;
 
@@ -26,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -54,20 +56,23 @@ public class MainActivity extends FragmentActivity implements
 	
 	private int spinner_img[] = {R.drawable.spinner_field, R.drawable.spinner_timer, R.drawable.spinner_total};
 	
-	private boolean isStart = true;
 	private ColorDrawable cd = new ColorDrawable(); 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		// Set up the action bar.
 		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		cd.setColor(0xff000000);	// black
 		actionBar.setBackgroundDrawable(cd);
-
+		if (!getResources().getBoolean(R.bool.isTablet))
+		{
+			actionBar.setDisplayShowTitleEnabled(false);
+		}
+		
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
@@ -117,9 +122,28 @@ public class MainActivity extends FragmentActivity implements
     	currMatch.updateMenuItem(menu.findItem(R.id.timer), menu.findItem(R.id.score));
     	
     	MenuItem pause = menu.findItem(R.id.pause);
-    	start_stop = menu.findItem(R.id.start_stop);
     	pause.setVisible(false);
     	
+    	start_stop = menu.findItem(R.id.start_stop);
+    	//Toast.makeText(this, ""+m.getCurrState(), Toast.LENGTH_LONG).show();
+    	switch (m.getCurrState())
+    	{
+    		case 1:
+    			cd.setColor(0xff669900);	//green
+    			start_stop.setIcon(R.drawable.action_stop);
+    			break;
+    		case 2:
+				currMatch.toggleTimer();
+				currMatch.toggleTimer();
+    			cd.setColor(0xffCC0000);	// red
+    			start_stop.setIcon(R.drawable.action_start);
+    			break;
+    		case 0:
+    		default:
+    			cd.setColor(0xff000000);	// black
+    			start_stop.setIcon(R.drawable.action_start);
+    	}
+    	actionBar.setBackgroundDrawable(cd);
     	return true;
     }
     @Override
@@ -127,28 +151,34 @@ public class MainActivity extends FragmentActivity implements
     	Match currMatch = m.getcurrMatch();
     	switch (item.getItemId()) {
     		case R.id.start_stop:
-    			if (isStart){
+    			if (m.getCurrState() != 1){
     				Log.w(TAG, "action_start()");
     				currMatch.onStart();
-    				cd.setColor(0xff669900);	//green
-    				item.setIcon(R.drawable.action_stop);
+    				m.setCurrState(1);
+    				GameGrid[] g = m.getGameGrid();
+    				for (int i=0; i<4; i++)
+    					g[i].updateScore();
+    				//cd.setColor(0xff669900);	//green
+    				//item.setIcon(R.drawable.action_stop);
     			}else{
     				Log.w(TAG, "action_stop()");
     				currMatch.cancel();
-    				cd.setColor(0xff0099CC);	// blue
-    				item.setIcon(R.drawable.action_start);
+    				m.setCurrState(2);
+    				//cd.setColor(0xffCC0000);	// red
+    				//item.setIcon(R.drawable.action_start);
     			}
-				actionBar.setBackgroundDrawable(cd);
-    			isStart = !isStart;
+				//actionBar.setBackgroundDrawable(cd);
+    			invalidateOptionsMenu();
     			break;
     		case R.id.reset:
     			Log.w(TAG, "action_reset()");
 				currMatch.cancel();
 				currMatch.reset();
-				start_stop.setIcon(R.drawable.action_start);
-				isStart = true;
-				cd.setColor(0xff000000);	// black
-				actionBar.setBackgroundDrawable(cd);
+				m.setCurrState(0);
+				GameGrid[] g = m.getGameGrid();
+				for (int i=0; i<4; i++)
+					g[i].updateScore();
+				invalidateOptionsMenu();
     			break;
     		case R.id.timer:
     			currMatch.toggleTimer();

@@ -10,9 +10,11 @@ import android.widget.Spinner;
 public class Match extends CountDownTimer{
 	
 	private final String TAG = "Match"; 
+	private final int[][] scoreBase = { {40, 20}, {20, 40}, {20, 20}, {100, 50}};
+	private int[][] numBalls = { {0, 0}, {0, 0}, {0, 0}, {0, 0}};
 	
 	private MenuItem mtimer, mscore;
-	private int timeleft, fieldscore;
+	private int timeleft;
 	private ScoreAdapter sa;
 	private Boolean showClock;
 	
@@ -23,7 +25,6 @@ public class Match extends CountDownTimer{
 		mtimer = timer;
 		mscore = score;
 		timeleft = 300;
-		fieldscore = 0;
 	}
 	
     public Match(long millisInFuture, long countDownInterval) {     
@@ -44,7 +45,9 @@ public class Match extends CountDownTimer{
     		sa = (ScoreAdapter)((Spinner) mscore.getActionView()).getAdapter();
     	}
     	timeleft = 300;
-		fieldscore = 0;
+		for (int i=0; i<4; i++)
+			for (int j=0; j<2; j++)
+				numBalls[i][j] = 0;
 		sa.notifyDataSetChanged();
     	return start();
     }
@@ -67,16 +70,44 @@ public class Match extends CountDownTimer{
     	sa.notifyDataSetChanged();
     }
     
+    public int getFieldScore(){
+    	
+    	int fieldScore = 0;
+    	
+		for (int i=0; i<4; i++)
+			for (int j=0; j<2; j++)
+				fieldScore += numBalls[i][j]*scoreBase[i][j];
+    	
+		return fieldScore;
+    }
+    
+    public int changeBallNum(int n, int x, int y)
+    {
+    	if (n==0)
+    		return numBalls[x][y];
+    	numBalls[x][y] += n;
+    	if (numBalls[x][y] < 0){
+    		numBalls[x][y] = 0;
+    	}
+    	sa.notifyDataSetChanged();
+    	return numBalls[x][y];
+    }
+    
+    public int getScoreBase(int x, int y)
+    {
+    	return scoreBase[x][y];
+    }
+    
     public int getScore (int i)
     {
     	switch (i)
     	{
     		case 0:
-    			return fieldscore;
+    			return getFieldScore();
     		case 1:
     			return timeleft;
     		default:
-    			return fieldscore + timeleft;
+    			return getFieldScore() + timeleft;
     	}
     }
     
@@ -84,7 +115,9 @@ public class Match extends CountDownTimer{
     {
     	Log.w(TAG, "reset()");
     	timeleft = 300;
-		fieldscore = 0;
+		for (int i=0; i<4; i++)
+			for (int j=0; j<2; j++)
+				numBalls[i][j] = 0;
 		if (sa != null){
 			sa.notifyDataSetChanged();
 		}

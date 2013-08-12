@@ -1,6 +1,7 @@
 package com.hoo.marscolony;
 
 import com.hoo.marscolony.manage.GameGrid;
+import com.hoo.marscolony.manage.MatchManager;
 
 import android.content.res.Resources;
 import android.graphics.Point;
@@ -15,7 +16,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
-public class FieldFragment extends Fragment {
+public class FieldFragment extends Fragment{
 	
 	private final String TAG = "FieldFragment";
 	
@@ -33,16 +34,17 @@ public class FieldFragment extends Fragment {
 	private final int col = 2;
 	private GameGrid[] fieldGrids;
 
-
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
         mLayout = (View) inflater.inflate(R.layout.fragment_field, container, false);
         
     	mainView = (RelativeLayout)mLayout.findViewById(R.id.main_wrapper);
     	mainView.post(new Runnable() {
     		public void run() {
     			Log.i(TAG, "post() starts");
+    			MatchManager m = MatchManager.getManager();
     			Display display = getActivity().getWindowManager().getDefaultDisplay();
     			Point size = new Point();
     			display.getSize(size);
@@ -84,7 +86,9 @@ public class FieldFragment extends Fragment {
     				}
     			}
     			//fieldGrids[0].getView().setOnClickListener(MainActivity.this);
+    			m.pushGameGrid(fieldGrids);
     			Log.i(TAG, "post() ends");
+    			
     		}
     	});
     	Log.i(TAG, "onCreateView() ends");

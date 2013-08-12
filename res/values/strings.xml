@@ -3,9 +3,9 @@
 
     <string name="app_name">Mars Colony Scoring</string>
     <string name="action_settings">Settings</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Scoring</string>
+    <string name="title_section2">Record</string>
+    <string name="title_section3">Information</string>
     <string name="action_start">Start</string>
     <string name="action_pause">Pause</string>
     <string name="action_stop">Stop</string>

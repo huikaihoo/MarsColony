@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:stretchColumns="0,1,2"
-        android:background="#ff000000" >
+        android:background="#ffFFFF33" >
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -35,21 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="T"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceLarge" />
-
-
-            
-        	<TextView
-                android:id="@+id/red_each_score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:background="@color/red"
-                android:gravity="center"
-                android:text="20"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white" />
         </TableRow>
 
         <TableRow
@@ -58,36 +45,31 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" >
 
-            <Button
-                android:id="@+id/red_decrease"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:background="@drawable/button_red"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white" />
-
             <TextView
                 android:id="@+id/red_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:gravity="center"
-                android:background="@color/red"
                 android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
 
-            <Button
-                android:id="@+id/red_increase"
+            <Switch
+                android:id="@+id/toggle_100"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"
-                android:background="@drawable/button_red"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white" />
+                android:textOn="Own"
+                android:textOff="No"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
+            <TextView
+                android:id="@+id/red_each_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="20"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/black" />
             
         </TableRow>
 
@@ -96,52 +78,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/blue_decrease"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_blue"
-                android:text="-"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white" />
-
             <TextView
                 android:id="@+id/blue_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/deep_blue"
                 android:gravity="center"
                 android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
 
-            <Button
-                android:id="@+id/blue_increase"
+            <Switch
+                android:id="@+id/toggle_50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_blue"
-                android:text="+"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+                android:textOn="Both"
+                android:textOff="No"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/blue_each_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:background="@color/deep_blue"
                 android:gravity="center"
                 android:text="20"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
 
         </TableRow>
 
